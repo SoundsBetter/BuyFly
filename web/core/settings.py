@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from datetime import timedelta
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'drf_spectacular',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    'apps.users',
+    'apps.accounts',
 ]
 
 MIDDLEWARE = [
@@ -135,20 +137,22 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 REST_AUTH = {
     "USE_JWT": True,
     'JWT_AUTH_COOKIE': 'bf-auth',
     'JWT_AUTH_REFRESH_COOKIE': 'bf-refresh-token',
+    'USER_DETAILS_SERIALIZER': 'apps.accounts.serializers.UserSerializer',
 }
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "")
@@ -157,3 +161,17 @@ EMAIL_PORT = os.getenv("EMAIL_PORT", "")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = True
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'BuyFly API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=int(os.getenv("ACCESS_TOKEN_LIFETIME"))
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}

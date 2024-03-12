@@ -1,12 +1,9 @@
-from django.contrib.auth.models import Group
 from rest_framework import serializers
 
-from apps.users.apis import CheckInManager
-from apps.users.models import User, GateManager
+from apps.accounts.models import User, GateManager, CheckInManager
 
 
 class UserSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='user-detail')
     groups = serializers.SlugRelatedField(
         slug_field='name', read_only=True, many=True,
     )
@@ -48,7 +45,7 @@ class CheckInManagerSerializer(BaseManagerSerializer):
         return check_in_manager
 
 
-class GateManagerSerializer(serializers.HyperlinkedModelSerializer):
+class GateManagerSerializer(BaseManagerSerializer):
     class Meta:
         model = GateManager
         fields = '__all__'

@@ -1,20 +1,11 @@
 from rest_framework import viewsets, permissions
 
-from apps.users.models import CheckInManager, User, GateManager
-from apps.users.serializers import (
+from apps.accounts.models import CheckInManager, GateManager
+from apps.accounts.serializers import (
     CheckInManagerSerializer,
-    UserSerializer,
     GateManagerSerializer,
 )
-from apps.users.permissions import IsSupervisor
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
+from apps.accounts.permissions import IsSupervisor
 
 
 class CheckInManagerViewSet(viewsets.ModelViewSet):
