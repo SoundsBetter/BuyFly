@@ -26,7 +26,9 @@ class Booking(models.Model):
     number = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.TextField(choices=Status.choices, default=Status.RESERVED)
+    status = models.CharField(
+        max_length=32, choices=Status.choices, default=Status.RESERVED
+    )
 
 
 
@@ -50,7 +52,9 @@ class Ticket(models.Model):
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     seat = models.ForeignKey("flights.Seat", on_delete=models.SET_NULL, null=True)
 
-    status = models.TextField(choices=Status.choices, default=Status)
+    status = models.CharField(
+        max_length=32, choices=Status.choices, default=Status.PENDING
+    )
 
 
 class Option(models.Model):

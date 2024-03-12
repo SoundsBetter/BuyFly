@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 from django.db.models import OneToOneField
 
+from conf import GROUP_SUPERVISORS, GROUP_GATE_MANAGERS, GROUP_CHECK_IN_MANAGERS
 
 class User(AbstractUser):
     phone_number = models.CharField(blank=True, null=True, max_length=20)
@@ -11,13 +12,13 @@ class User(AbstractUser):
 
 class Supervisor(models.Model):
     user = OneToOneField(
-        User, on_delete=models.CASCADE, related_name='supervisor',
+        User, on_delete=models.CASCADE, related_name=GROUP_SUPERVISORS,
     )
 
 
 class CheckInManager(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='check_in_manager',
+        User, on_delete=models.CASCADE, related_name=GROUP_CHECK_IN_MANAGERS,
     )
 
     def save(self, *args, **kwargs):
@@ -30,7 +31,7 @@ class CheckInManager(models.Model):
 
 class GateManager(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='gate_manager'
+        User, on_delete=models.CASCADE, related_name=GROUP_GATE_MANAGERS,
     )
 
     def save(self, *args, **kwargs):

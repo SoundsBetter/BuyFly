@@ -2,6 +2,18 @@ from django.db import models
 
 
 class Flight(models.Model):
+    class Status(models.TextChoices):
+        SCHEDULED = 'scheduled', 'Scheduled'
+        ON_TIME = 'on_time', 'On Time'
+        DELAYED = 'delayed', 'Delayed'
+        BOARDING = 'boarding', 'Boarding'
+        DEPARTED = 'departed', 'Departed'
+        IN_FLIGHT = 'in_flight', 'In Flight'
+        LANDED = 'landed', 'Landed'
+        CANCELLED = 'cancelled', 'Cancelled'
+        DIVERTED = 'diverted', 'Diverted'
+        COMPLETED = 'completed', 'Completed'
+
     departure_airport = models.ForeignKey(
         "Airport",
         on_delete=models.CASCADE,
@@ -11,6 +23,12 @@ class Flight(models.Model):
         "Airport",
         on_delete=models.CASCADE,
         related_name='arrival_flights'
+    )
+
+    status = models.CharField(
+        max_length=10,
+        choices=Status.choices,
+        default=Status.SCHEDULED,
     )
 
     options = models.ManyToManyField("bookings.Option")
@@ -47,7 +65,7 @@ class Seat(models.Model):
         B = "Business"
 
     number = models.CharField(max_length=10)
-    seat_type = models.TextField(choices=SeatType)
+    seat_type = models.CharField(max_length=32, choices=SeatType.choices)
     price_coefficient = models.DecimalField(max_digits=20, decimal_places=5)
 
 
