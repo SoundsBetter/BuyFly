@@ -43,7 +43,7 @@ class Flight(models.Model):
 
 
 class AirplaneType(models.Model):
-    model = models.CharField(max_length=10, unique=True)
+    model = models.CharField(max_length=32, unique=True)
     params = models.JSONField()
 
 
@@ -52,7 +52,7 @@ class Airplane(models.Model):
         "AirplaneType", on_delete=models.CASCADE, related_name='airplane'
     )
 
-    number = models.CharField(max_length=10, unique=True)
+    number = models.CharField(max_length=16, unique=True)
 
 
 class Seat(models.Model):
