@@ -70,7 +70,26 @@ class Seat(models.Model):
 
 
 class Airport(models.Model):
+    class DaylightSavingsTime(models.TextChoices):
+        EUROPE = "E"
+        US_CANADA = "A"
+        SOUTH_AMERICA = "S"
+        AUSTRALIA = "O"
+        NEW_ZEALAND = "Z"
+        NONE = "N"
+        UNKNOWN = "U"
+
     name = models.CharField(max_length=256)
-    code_name = models.CharField(max_length=10, unique=True)
-    city = models.CharField(max_length=256)
-    country = models.CharField(max_length=256)
+    city = models.CharField(max_length=32, blank=True, null=True)
+    country = models.CharField(max_length=32)
+    iata = models.CharField(max_length=5, unique=True, null=True)
+    icao = models.CharField(max_length=7, unique=True)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6)
+    altitude = models.IntegerField()
+    timezone_offset = models.FloatField(null=True, blank=True)
+    dst = models.CharField(
+        max_length=2,
+        choices=DaylightSavingsTime,
+        default=DaylightSavingsTime.UNKNOWN
+    )

@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 from django.db.models import OneToOneField
 
-from conf import GROUP_SUPERVISORS, GROUP_GATE_MANAGERS, GROUP_CHECK_IN_MANAGERS
+from .conf import GROUP_SUPERVISORS, GROUP_GATE_MANAGERS, GROUP_CHECK_IN_MANAGERS
 
 class User(AbstractUser):
     phone_number = models.CharField(blank=True, null=True, max_length=20)
