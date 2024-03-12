@@ -76,14 +76,13 @@ class Airport(models.Model):
         SOUTH_AMERICA = "S"
         AUSTRALIA = "O"
         NEW_ZEALAND = "Z"
-        NONE = "N"
         UNKNOWN = "U"
 
     name = models.CharField(max_length=256)
     city = models.CharField(max_length=32, blank=True, null=True)
     country = models.CharField(max_length=32)
     iata = models.CharField(max_length=5, unique=True, null=True)
-    icao = models.CharField(max_length=7, unique=True)
+    icao = models.CharField(max_length=7, unique=True, null=True)
     latitude = models.DecimalField(max_digits=10, decimal_places=6)
     longitude = models.DecimalField(max_digits=10, decimal_places=6)
     altitude = models.IntegerField()
@@ -91,5 +90,6 @@ class Airport(models.Model):
     dst = models.CharField(
         max_length=2,
         choices=DaylightSavingsTime,
-        default=DaylightSavingsTime.UNKNOWN
+        default=DaylightSavingsTime.UNKNOWN,
+        null=True,
     )

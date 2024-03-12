@@ -18,18 +18,18 @@ class Command(BaseCommand):
                     name=airport["name"],
                     city=airport["city"],
                     country=airport["country"],
-                    iata=airport["iata"] if airport["iata"] != "\\N" else None,
+                    iata=airport["iata"],
                     icao=airport["icao"],
                     latitude=airport["latitude"],
                     longitude=airport["longitude"],
                     altitude=airport["altitude"],
-                    timezone_offset=airport["timezone_offset"]
-                    if airport["timezone_offset"] != "\\N"
-                    else None,
+                    timezone_offset=airport["timezone_offset"],
                     dst=airport["dst"],
                 )
                 self.stdout.write(
                     self.style.SUCCESS(f'{airport["name"]} was created')
                 )
 
-        self.stdout.write(self.style.SUCCESS("Successfully imported airports"))
+        self.stdout.write(self.style.SUCCESS(
+            "***SUCCESSFULLY ADDED AIRPORTS***")
+        )
