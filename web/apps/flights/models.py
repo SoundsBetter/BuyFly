@@ -13,11 +13,15 @@ class Flight(models.Model):
         related_name='arrival_flights'
     )
 
+    options = models.ManyToManyField("bookings.Option")
+
     number = models.CharField(max_length=10, unique=True)
     departure_datetime = models.DateTimeField()
     arrival_datetime = models.DateTimeField()
-    economy_price = models.DecimalField(max_digits=20, decimal_places=2)
-    business_price = models.DecimalField(max_digits=20, decimal_places=2)
+    base_price = models.DecimalField(max_digits=20, decimal_places=2)
+    options_price_coefficient = models.DecimalField(
+        max_digits=20, decimal_places=5
+    )
 
 
 class AirplaneType(models.Model):
@@ -39,11 +43,12 @@ class Seat(models.Model):
     )
 
     class SeatType(models.TextChoices):
-        E = "ECO", "Economy"
-        B = "BUS", "Business"
+        E = "Economy"
+        B = "Business"
 
     number = models.CharField(max_length=10)
     seat_type = models.TextField(choices=SeatType)
+    price_coefficient = models.DecimalField(max_digits=20, decimal_places=5)
 
 
 class Airport(models.Model):

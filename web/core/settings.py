@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'apps.accounts',
+    'apps.flights',
+    'apps.bookings',
 ]
 
 MIDDLEWARE = [
