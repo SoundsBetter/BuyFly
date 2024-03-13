@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import UniqueConstraint
+
+from apps.bookings.managers import TicketManager
 
 
 class Booking(models.Model):
@@ -41,12 +44,20 @@ class Passenger(models.Model):
 
 
 class Ticket(models.Model):
+    objects = TicketManager()
+
     class Status(models.TextChoices):
         PENDING = 'pending'
         CHECK_IN = 'check_in'
         BOARDED = 'boarded'
         CANCELLED = 'cancelled'
         REFUNDED = 'refunded'
+
+    options = models.ManyToManyField(
+        "Option",
+        through='TicketOption',
+        related_name='tickets'
+    )
 
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
@@ -62,4 +73,17 @@ class Option(models.Model):
     price = models.DecimalField(max_digits=20, decimal_places=2)
 
 
+class TicketOption(models.Model):
+    option = models.ForeignKey(
+        "Option", on_delete=models.CASCADE
+    )
+    ticket = models.ForeignKey(
+        "Ticket", on_delete=models.CASCADE
+    )
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['option', 'ticket'], name='ticket_option')
+        ]
 

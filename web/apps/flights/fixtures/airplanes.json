@@ -1,0 +1,802 @@
+[
+    {
+        "model": "flights.airplane",
+        "pk": 1,
+        "fields": {
+            "type": 1,
+            "number": "EF7689"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 2,
+        "fields": {
+            "type": 2,
+            "number": "AG2530"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 3,
+        "fields": {
+            "type": 3,
+            "number": "NV1196"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 4,
+        "fields": {
+            "type": 4,
+            "number": "GJ3083"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 5,
+        "fields": {
+            "type": 5,
+            "number": "XQ8900"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 6,
+        "fields": {
+            "type": 6,
+            "number": "FJ3407"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 7,
+        "fields": {
+            "type": 7,
+            "number": "PU8451"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 8,
+        "fields": {
+            "type": 8,
+            "number": "YS1194"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 9,
+        "fields": {
+            "type": 9,
+            "number": "RF4797"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 10,
+        "fields": {
+            "type": 10,
+            "number": "LL7813"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 11,
+        "fields": {
+            "type": 1,
+            "number": "CS4844"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 12,
+        "fields": {
+            "type": 2,
+            "number": "QK4473"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 13,
+        "fields": {
+            "type": 3,
+            "number": "JW4237"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 14,
+        "fields": {
+            "type": 4,
+            "number": "OC2043"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 15,
+        "fields": {
+            "type": 5,
+            "number": "TW8763"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 16,
+        "fields": {
+            "type": 6,
+            "number": "ZB9862"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 17,
+        "fields": {
+            "type": 7,
+            "number": "EW3214"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 18,
+        "fields": {
+            "type": 8,
+            "number": "CP5310"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 19,
+        "fields": {
+            "type": 9,
+            "number": "VV5355"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 20,
+        "fields": {
+            "type": 10,
+            "number": "EN4665"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 21,
+        "fields": {
+            "type": 1,
+            "number": "IE3116"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 22,
+        "fields": {
+            "type": 2,
+            "number": "SM7928"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 23,
+        "fields": {
+            "type": 3,
+            "number": "WT4154"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 24,
+        "fields": {
+            "type": 4,
+            "number": "DQ7999"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 25,
+        "fields": {
+            "type": 5,
+            "number": "NN8063"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 26,
+        "fields": {
+            "type": 6,
+            "number": "ZS4373"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 27,
+        "fields": {
+            "type": 7,
+            "number": "AJ2073"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 28,
+        "fields": {
+            "type": 8,
+            "number": "QZ1427"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 29,
+        "fields": {
+            "type": 9,
+            "number": "CH8667"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 30,
+        "fields": {
+            "type": 10,
+            "number": "VZ7627"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 31,
+        "fields": {
+            "type": 1,
+            "number": "MZ3083"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 32,
+        "fields": {
+            "type": 2,
+            "number": "AZ8936"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 33,
+        "fields": {
+            "type": 3,
+            "number": "SG9813"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 34,
+        "fields": {
+            "type": 4,
+            "number": "PU0882"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 35,
+        "fields": {
+            "type": 5,
+            "number": "ZX3573"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 36,
+        "fields": {
+            "type": 6,
+            "number": "XK5321"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 37,
+        "fields": {
+            "type": 7,
+            "number": "CU7435"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 38,
+        "fields": {
+            "type": 8,
+            "number": "PL7502"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 39,
+        "fields": {
+            "type": 9,
+            "number": "EZ7090"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 40,
+        "fields": {
+            "type": 10,
+            "number": "GN4602"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 41,
+        "fields": {
+            "type": 1,
+            "number": "IQ0503"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 42,
+        "fields": {
+            "type": 2,
+            "number": "PX5852"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 43,
+        "fields": {
+            "type": 3,
+            "number": "MJ7891"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 44,
+        "fields": {
+            "type": 4,
+            "number": "EQ4879"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 45,
+        "fields": {
+            "type": 5,
+            "number": "BU2281"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 46,
+        "fields": {
+            "type": 6,
+            "number": "NS3665"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 47,
+        "fields": {
+            "type": 7,
+            "number": "EW8835"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 48,
+        "fields": {
+            "type": 8,
+            "number": "GN9978"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 49,
+        "fields": {
+            "type": 9,
+            "number": "XI9247"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 50,
+        "fields": {
+            "type": 10,
+            "number": "ZZ4288"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 51,
+        "fields": {
+            "type": 1,
+            "number": "RZ6367"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 52,
+        "fields": {
+            "type": 2,
+            "number": "OS2985"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 53,
+        "fields": {
+            "type": 3,
+            "number": "KG0681"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 54,
+        "fields": {
+            "type": 4,
+            "number": "CK0666"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 55,
+        "fields": {
+            "type": 5,
+            "number": "XK4517"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 56,
+        "fields": {
+            "type": 6,
+            "number": "LZ2696"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 57,
+        "fields": {
+            "type": 7,
+            "number": "KL1526"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 58,
+        "fields": {
+            "type": 8,
+            "number": "DZ2282"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 59,
+        "fields": {
+            "type": 9,
+            "number": "XF8037"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 60,
+        "fields": {
+            "type": 10,
+            "number": "XG8751"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 61,
+        "fields": {
+            "type": 1,
+            "number": "UX0701"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 62,
+        "fields": {
+            "type": 2,
+            "number": "LR5175"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 63,
+        "fields": {
+            "type": 3,
+            "number": "IG6617"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 64,
+        "fields": {
+            "type": 4,
+            "number": "PX7045"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 65,
+        "fields": {
+            "type": 5,
+            "number": "DS3297"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 66,
+        "fields": {
+            "type": 6,
+            "number": "KA8616"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 67,
+        "fields": {
+            "type": 7,
+            "number": "ZV3963"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 68,
+        "fields": {
+            "type": 8,
+            "number": "IQ0419"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 69,
+        "fields": {
+            "type": 9,
+            "number": "IF1676"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 70,
+        "fields": {
+            "type": 10,
+            "number": "JM4027"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 71,
+        "fields": {
+            "type": 1,
+            "number": "ZX7776"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 72,
+        "fields": {
+            "type": 2,
+            "number": "SJ0660"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 73,
+        "fields": {
+            "type": 3,
+            "number": "PW8811"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 74,
+        "fields": {
+            "type": 4,
+            "number": "OE1270"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 75,
+        "fields": {
+            "type": 5,
+            "number": "AT1958"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 76,
+        "fields": {
+            "type": 6,
+            "number": "QH9258"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 77,
+        "fields": {
+            "type": 7,
+            "number": "KS0403"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 78,
+        "fields": {
+            "type": 8,
+            "number": "ZS7118"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 79,
+        "fields": {
+            "type": 9,
+            "number": "BU9548"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 80,
+        "fields": {
+            "type": 10,
+            "number": "YN3018"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 81,
+        "fields": {
+            "type": 1,
+            "number": "FN1831"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 82,
+        "fields": {
+            "type": 2,
+            "number": "OV0967"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 83,
+        "fields": {
+            "type": 3,
+            "number": "SE4770"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 84,
+        "fields": {
+            "type": 4,
+            "number": "UO2088"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 85,
+        "fields": {
+            "type": 5,
+            "number": "HV5492"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 86,
+        "fields": {
+            "type": 6,
+            "number": "QZ0885"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 87,
+        "fields": {
+            "type": 7,
+            "number": "UG2320"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 88,
+        "fields": {
+            "type": 8,
+            "number": "KY8153"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 89,
+        "fields": {
+            "type": 9,
+            "number": "FJ6470"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 90,
+        "fields": {
+            "type": 10,
+            "number": "JM1133"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 91,
+        "fields": {
+            "type": 1,
+            "number": "GW5816"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 92,
+        "fields": {
+            "type": 2,
+            "number": "SN5054"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 93,
+        "fields": {
+            "type": 3,
+            "number": "EK7157"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 94,
+        "fields": {
+            "type": 4,
+            "number": "OJ8667"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 95,
+        "fields": {
+            "type": 5,
+            "number": "LY3149"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 96,
+        "fields": {
+            "type": 6,
+            "number": "DM6750"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 97,
+        "fields": {
+            "type": 7,
+            "number": "YD7084"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 98,
+        "fields": {
+            "type": 8,
+            "number": "XZ8886"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 99,
+        "fields": {
+            "type": 9,
+            "number": "ET1527"
+        }
+    },
+    {
+        "model": "flights.airplane",
+        "pk": 100,
+        "fields": {
+            "type": 10,
+            "number": "GF0158"
+        }
+    }
+]

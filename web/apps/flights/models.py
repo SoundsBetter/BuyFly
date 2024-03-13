@@ -31,7 +31,7 @@ class Flight(models.Model):
         default=Status.SCHEDULED,
     )
 
-    options = models.ManyToManyField("bookings.Option")
+    options = models.ManyToManyField("bookings.Option", blank=True)
 
     number = models.CharField(max_length=10, unique=True)
     departure_datetime = models.DateTimeField()
@@ -66,7 +66,6 @@ class Seat(models.Model):
 
     number = models.CharField(max_length=10)
     seat_type = models.CharField(max_length=32, choices=SeatType.choices)
-    price_coefficient = models.DecimalField(max_digits=20, decimal_places=5)
 
 
 class Airport(models.Model):
