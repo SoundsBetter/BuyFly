@@ -20,10 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ["password"]
 
 
-class BaseManagerSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.HyperlinkedIdentityField(
-        read_only=True, view_name='user-detail'
-    )
+class BaseManagerSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
     username = serializers.CharField(source='user.username')
     email = serializers.EmailField(source='user.email')
     password = serializers.CharField(source="user.password")

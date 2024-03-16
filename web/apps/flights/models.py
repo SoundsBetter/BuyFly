@@ -1,7 +1,12 @@
 from django.db import models
+from django.db.models import UniqueConstraint
+
+from apps.flights.managers import AirportManager, FlightManager
 
 
 class Flight(models.Model):
+    objects = FlightManager()
+
     class Status(models.TextChoices):
         SCHEDULED = 'scheduled', 'Scheduled'
         ON_TIME = 'on_time', 'On Time'
@@ -14,15 +19,8 @@ class Flight(models.Model):
         DIVERTED = 'diverted', 'Diverted'
         COMPLETED = 'completed', 'Completed'
 
-    departure_airport = models.ForeignKey(
-        "Airport",
-        on_delete=models.CASCADE,
-        related_name='departure_flights'
-    )
-    arrival_airport = models.ForeignKey(
-        "Airport",
-        on_delete=models.CASCADE,
-        related_name='arrival_flights'
+    route = models.ForeignKey(
+        "Route", on_delete=models.CASCADE, related_name='flights'
     )
 
     status = models.CharField(
@@ -33,9 +31,9 @@ class Flight(models.Model):
 
     options = models.ManyToManyField("bookings.Option", blank=True)
 
-    number = models.CharField(max_length=10, unique=True)
+    number = models.CharField(max_length=10)
     departure_datetime = models.DateTimeField()
-    arrival_datetime = models.DateTimeField()
+    duration = models.DurationField()
     base_price = models.DecimalField(max_digits=20, decimal_places=2)
     options_price_coefficient = models.DecimalField(
         max_digits=20, decimal_places=5
@@ -69,6 +67,8 @@ class Seat(models.Model):
 
 
 class Airport(models.Model):
+    objects = AirportManager()
+
     class DaylightSavingsTime(models.TextChoices):
         EUROPE = "E"
         US_CANADA = "A"
@@ -92,3 +92,30 @@ class Airport(models.Model):
         default=DaylightSavingsTime.UNKNOWN,
         null=True,
     )
+
+    def __str__(self):
+        return self.icao
+
+
+class Route(models.Model):
+    departure_airport = models.ForeignKey(
+        "Airport",
+        on_delete=models.CASCADE,
+        related_name='departures'
+    )
+    arrival_airport = models.ForeignKey(
+        "Airport",
+        on_delete=models.CASCADE,
+        related_name='arrivals'
+    )
+
+    def __str__(self):
+        return f"{self.departure_airport.icao} - {self.arrival_airport.icao}"
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                fields=['departure_airport', 'arrival_airport'],
+                name='unique_route'
+            )
+        ]

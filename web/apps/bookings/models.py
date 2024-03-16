@@ -66,6 +66,8 @@ class Ticket(models.Model):
     status = models.CharField(
         max_length=32, choices=Status.choices, default=Status.PENDING
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Option(models.Model):
@@ -86,4 +88,24 @@ class TicketOption(models.Model):
         constraints = [
             UniqueConstraint(fields=['option', 'ticket'], name='ticket_option')
         ]
+
+
+class PaymentMethod(models.Model):
+    pass
+
+
+class Payment(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending'
+        APPROVED = 'approved'
+        REJECTED = 'rejected'
+
+    booking = models.ForeignKey(
+        "Booking", on_delete=models.CASCADE, related_name='payments'
+    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
