@@ -3,7 +3,7 @@ from django.db import models
 from .conf import COMPANY_CODE_NAME, FLIGHT_NUMBER_TEMPLATE
 
 class FlightManager(models.Manager):
-    def create_flight(self, route):
+    def create_flight_number(self, route):
         same_route = self.get_queryset().filter(route=route).count()
         flight_number = FLIGHT_NUMBER_TEMPLATE.format(
             prefix=COMPANY_CODE_NAME,

@@ -1,9 +1,81 @@
 from rest_framework import serializers
 
-from apps.bookings.models import Booking
+from apps.flights.models import Flight, Seat
+from .models import (
+    Booking,
+    Passenger,
+    Ticket,
+    Option,
+    TicketOption, Payment,
+)
 
 
-class BookingSerializer(serializers.ModelSerializer):
+class BookingSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    flight = serializers.HyperlinkedRelatedField(
+        required=True, view_name="flight-detail", queryset=Flight.objects.all()
+    )
+
     class Meta:
         model = Booking
-        fields = '__all__'
+        fields = "__all__"
+        read_only_fields = ["number"]
+
+
+class PassengerSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Passenger
+        fields = "__all__"
+
+
+class TicketSerializer(serializers.HyperlinkedModelSerializer):
+    seat = serializers.PrimaryKeyRelatedField(
+        queryset=Seat.objects.all(), required=False, allow_null=True
+    )
+    options = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+        many=True,
+        required=False,
+        allow_null=True,
+    )
+
+    class Meta:
+        model = Ticket
+        fields = "__all__"
+
+
+class OptionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Option
+        fields = "__all__"
+
+
+class TicketOptionSerializer(serializers.ModelSerializer):
+    ticket = serializers.HyperlinkedRelatedField(
+        view_name="ticket-detail", read_only=True
+    )
+    option = serializers.PrimaryKeyRelatedField(queryset=Option.objects.none())
+
+    class Meta:
+        model = TicketOption
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        view = kwargs.get("context").get("view")
+        if view and hasattr(view, "kwargs"):
+            if ticket_pk := view.kwargs["ticket_pk"]:
+                try:
+                    self.fields[
+                        "option"
+                    ].queryset = Ticket.objects.get_available_options(ticket_pk)
+                except Ticket.DoesNotExist:
+                    self.fields["option"].queryset = None
+
+
+class PaymentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Payment
+        fields = "__all__"

@@ -2,10 +2,13 @@ from django.db import models
 from django.conf import settings
 from django.db.models import UniqueConstraint
 
-from apps.bookings.managers import TicketManager
+from apps.bookings.managers import TicketManager, BookingManager
+from apps.flights.models import SeatType
 
 
 class Booking(models.Model):
+    objects = BookingManager()
+
     class Status(models.TextChoices):
         RESERVED = 'reserved'
         PENDING = 'pending'
@@ -26,12 +29,15 @@ class Booking(models.Model):
         on_delete=models.SET_NULL,
     )
 
-    number = models.CharField(max_length=32)
+    number = models.CharField(max_length=64, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(
         max_length=32, choices=Status.choices, default=Status.RESERVED
     )
+
+    def __str__(self):
+        return f"{self.pk} - {self.number}"
 
 
 
@@ -41,6 +47,13 @@ class Passenger(models.Model):
 
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
+    date_of_birth = models.DateField()
+    passport_number = models.CharField(max_length=16)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} {self.passport_number}"
 
 
 class Ticket(models.Model):
@@ -53,16 +66,10 @@ class Ticket(models.Model):
         CANCELLED = 'cancelled'
         REFUNDED = 'refunded'
 
-    options = models.ManyToManyField(
-        "Option",
-        through='TicketOption',
-        related_name='tickets'
-    )
-
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     seat = models.ForeignKey("flights.Seat", on_delete=models.SET_NULL, null=True)
-
+    seat_type = models.CharField(max_length=32, choices=SeatType.choices)
     status = models.CharField(
         max_length=32, choices=Status.choices, default=Status.PENDING
     )
@@ -74,13 +81,16 @@ class Option(models.Model):
     name = models.CharField(max_length=32)
     price = models.DecimalField(max_digits=20, decimal_places=2)
 
+    def __str__(self):
+        return f"{self.name} for {self.price}"
+
 
 class TicketOption(models.Model):
     option = models.ForeignKey(
         "Option", on_delete=models.CASCADE
     )
     ticket = models.ForeignKey(
-        "Ticket", on_delete=models.CASCADE
+        "Ticket", on_delete=models.CASCADE, related_name="options"
     )
     quantity = models.PositiveIntegerField(default=1)
 

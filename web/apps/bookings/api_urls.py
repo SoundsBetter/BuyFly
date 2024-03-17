@@ -1,11 +1,31 @@
 from django.urls import include, path
-from rest_framework import routers
+from rest_framework.routers import DefaultRouter
+from rest_framework_nested.routers import NestedSimpleRouter
 
-from apps.bookings.apis import BookingViewSet
+from apps.bookings.apis import (
+    BookingViewSet,
+    PassengerViewSet,
+    TicketViewSet,
+    OptionViewSet,
+    TicketOptionViewSet, PaymentViewSet,
+)
 
-router = routers.DefaultRouter()
-router.register(r'', BookingViewSet, basename='booking')
+router = DefaultRouter()
+
+router.register(r"payments", PaymentViewSet, basename="payments")
+router.register(r"options", OptionViewSet, basename="option")
+router.register(r"passengers", PassengerViewSet, basename="passenger")
+router.register(r"tickets", TicketViewSet, basename="ticket")
+router.register(r"", BookingViewSet, basename="booking")
+
+ticket_options_router = NestedSimpleRouter(
+    router, r"tickets", lookup="ticket"
+)
+ticket_options_router.register(
+    r"options", TicketOptionViewSet, basename="ticketoption"
+)
 
 urlpatterns = [
-    path('', include(router.urls))
+    path("", include(router.urls)),
+    path("", include(ticket_options_router.urls))
 ]

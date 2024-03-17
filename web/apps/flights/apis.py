@@ -20,7 +20,7 @@ class FlightViewSet(BaseViewSet):
 
     def perform_create(self, serializer):
         route = serializer.validated_data['route']
-        number = Flight.objects.create_flight(route)
+        number = Flight.objects.create_flight_number(route)
         return serializer.save(number=number)
 
 
