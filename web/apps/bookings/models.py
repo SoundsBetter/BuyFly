@@ -2,8 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.db.models import UniqueConstraint
 
-from apps.bookings.managers import TicketManager, BookingManager
 from apps.flights.models import SeatType
+from .managers import TicketManager, BookingManager
 
 
 class Booking(models.Model):
@@ -129,7 +129,6 @@ class Payment(models.Model):
     booking = models.ForeignKey(
         "Booking", on_delete=models.CASCADE, related_name='payments'
     )
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(choices=Status.choices, default=Status.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

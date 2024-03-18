@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 
-from apps.flights.managers import AirportManager, FlightManager
+from .managers import AirportManager, FlightManager
 
 
 class Flight(models.Model):

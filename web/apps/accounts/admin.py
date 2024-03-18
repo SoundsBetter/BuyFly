@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import Group
+
 from .models import Supervisor, User
 
 
@@ -10,7 +11,7 @@ class SupervisorAdminForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, required=True)
 
     def __init__(self, *args, **kwargs):
-        super(SupervisorAdminForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if self.instance.pk and self.instance.user:
             self.fields['username'].initial = self.instance.user.username
             self.fields['email'].initial = self.instance.user.email
@@ -54,7 +55,7 @@ class SupervisorAdmin(admin.ModelAdmin):
     def get_email(self, obj):
         return obj.user.email
 
-    get_email.short_description = "email"
+    get_email.short_description = "email"  # type: ignore
 
 admin.site.register(Supervisor, SupervisorAdmin)
 admin.site.register(User)

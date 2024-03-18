@@ -1,13 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from . import apis
+from .apis import CheckInManagerViewSet, GateManagerViewSet
 
 router = DefaultRouter()
 
-router.register(r'checkinmanagers', apis.CheckInManagerViewSet,
+router.register(r'checkinmanagers', CheckInManagerViewSet,
                 basename='checkinmanager')
-router.register(r'gatemanagers', apis.GateManagerViewSet,
+router.register(r'gatemanagers', GateManagerViewSet,
                 basename='gatemanager')
 
 urlpatterns = [

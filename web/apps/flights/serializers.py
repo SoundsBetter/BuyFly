@@ -8,15 +8,18 @@ class FlightSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Flight
-        fields = '__all__'
-        read_only_fields = ['number']
+        fields = "__all__"
+        read_only_fields = ["number"]
 
 
 class RouteSerializer(serializers.HyperlinkedModelSerializer):
     departure_airport = serializers.PrimaryKeyRelatedField(
-        queryset=Airport.objects.all())
+        queryset=Airport.objects.all()
+    )
     arrival_airport = serializers.PrimaryKeyRelatedField(
-        queryset=Airport.objects.all())
+        queryset=Airport.objects.all()
+    )
+
     class Meta:
         model = Route
-        fields = '__all__'
+        fields = "__all__"

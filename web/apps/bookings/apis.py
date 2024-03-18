@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -53,6 +54,19 @@ class BookingViewSet(viewsets.ModelViewSet):
             status=status.HTTP_403_FORBIDDEN,
         )
 
+    @action(detail=True, methods=["get"], url_path="calculate_price")
+    def calculate_price(self, request, pk=None):
+        print(request.query_params)
+        try:
+            Booking.objects.calculate_price(booking_id=pk)
+        except Booking.DoesNotExist:
+            return Response(
+                {"error": "Booking not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+        return Response(
+            {"message": "Booking price is calculated"}, status=status.HTTP_200_OK
+        )
+
 
 class PassengerViewSet(viewsets.ModelViewSet):
     queryset = Passenger.objects.all()
@@ -89,6 +103,19 @@ class TicketViewSet(viewsets.ModelViewSet):
             return Ticket.objects.all()
         return Ticket.objects.filter(passenger__user=self.request.user)
 
+    @action(detail=True, methods=["get"], url_path="calculate_price")
+    def calculate_price(self, request, pk=None):
+        try:
+            Ticket.objects.calculate_price(ticket_id=pk)
+        except Ticket.DoesNotExist:
+            return Response(
+                {"error": "Ticket not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+        return Response(
+            {"message": "Ticket price is calculated"}, status=status.HTTP_200_OK
+        )
+
+
 
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()
@@ -97,7 +124,6 @@ class OptionViewSet(viewsets.ModelViewSet):
 
 
 class TicketOptionViewSet(viewsets.ModelViewSet):
-    queryset = TicketOption.objects.all()
     serializer_class = TicketOptionSerializer
     permission_classes = [
         IsAuthenticated,
@@ -109,23 +135,12 @@ class TicketOptionViewSet(viewsets.ModelViewSet):
         ticket = get_object_or_404(Ticket, pk=ticket_id)
         serializer.save(ticket=ticket)
 
+    def get_queryset(self):
+        return TicketOption.objects.filter(ticket_id=self.kwargs["ticket_pk"])
+
 
 class PaymentViewSet(viewsets.ModelViewSet):
     serializer_class = PaymentSerializer
-
-    def get_permissions(self):
-        if self.action in ("list", "retrieve"):
-            permission_classes = [
-                IsAuthenticated,
-                IsSupervisor | IsGateManager | IsCheckInManager | IsOwner,
-            ]
-        else:
-            permission_classes = [
-                IsAuthenticated,
-                IsSupervisor | IsGateManager | IsCheckInManager,
-            ]
-
-        return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         if self.request.user.groups.filter(name="supervisors").exists():

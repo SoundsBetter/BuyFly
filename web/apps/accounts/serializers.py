@@ -1,30 +1,24 @@
 from rest_framework import serializers
 
-from apps.accounts.models import User, GateManager, CheckInManager
+from .models import User, GateManager, CheckInManager
 
 
 class UserSerializer(serializers.ModelSerializer):
     groups = serializers.SlugRelatedField(
         slug_field='name', read_only=True, many=True,
     )
-    user_permissions = serializers.SlugRelatedField(
-        slug_field='name', read_only=True, many=True
-    )
-    is_active = serializers.BooleanField(read_only=True)
-    is_staff = serializers.BooleanField(read_only=True)
-    is_superuser = serializers.BooleanField(read_only=True)
-
 
     class Meta:
         model = User
         exclude = ["password"]
+        read_only_fields = ["is_active", "is_staff", "is_superuser"]
 
 
-class BaseManagerSerializer(serializers.ModelSerializer):
+class BaseManagerSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
-    username = serializers.CharField(source='user.username')
-    email = serializers.EmailField(source='user.email')
-    password = serializers.CharField(source="user.password")
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+    password = serializers.CharField(source="user.password", read_only=True)
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')

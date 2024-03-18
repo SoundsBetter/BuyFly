@@ -1,11 +1,11 @@
 from rest_framework import viewsets, permissions
 
-from apps.accounts.models import CheckInManager, GateManager
-from apps.accounts.serializers import (
+from .models import CheckInManager, GateManager
+from .serializers import (
     CheckInManagerSerializer,
     GateManagerSerializer,
 )
-from apps.accounts.permissions import IsSupervisor
+from .permissions import IsSupervisor
 
 
 class CheckInManagerViewSet(viewsets.ModelViewSet):

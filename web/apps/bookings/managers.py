@@ -1,7 +1,6 @@
 import secrets
 from datetime import datetime
 from django.db import models
-from django.db.models import Prefetch
 
 from .conf import BOOKING_NUMBER_TEMPLATE, BUSINESS_COEFFICIENT
 

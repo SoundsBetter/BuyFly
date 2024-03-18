@@ -6,7 +6,8 @@ from .models import (
     Passenger,
     Ticket,
     Option,
-    TicketOption, Payment,
+    TicketOption,
+    Payment,
 )
 
 
@@ -84,3 +85,4 @@ class PaymentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Payment
         fields = "__all__"
+        read_only_field = ["booking", "status", "created_at", "updated_at"]
