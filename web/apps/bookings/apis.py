@@ -131,3 +131,5 @@ class PaymentViewSet(viewsets.ModelViewSet):
         if self.request.user.groups.filter(name="supervisors").exists():
             return Payment.objects.all()
         return Payment.objects.filter(passenger__user=self.request.user)
+
+

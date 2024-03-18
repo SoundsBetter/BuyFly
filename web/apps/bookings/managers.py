@@ -1,8 +1,9 @@
 import secrets
 from datetime import datetime
 from django.db import models
+from django.db.models import Prefetch
 
-from .conf import BOOKING_NUMBER_TEMPLATE
+from .conf import BOOKING_NUMBER_TEMPLATE, BUSINESS_COEFFICIENT
 
 
 class BookingManager(models.Manager):
@@ -14,10 +15,32 @@ class BookingManager(models.Manager):
         )
         return number
 
+    def calculate_price(self, booking_id):
+        booking = self.get(pk=booking_id)
+        booking.price = sum(
+            ticket.price for ticket in self.get(pk=booking_id).tickets.all()
+        )
+        booking.save()
+
 
 class TicketManager(models.Manager):
     def get_available_options(self, ticket_pk):
         ticket = self.get(pk=ticket_pk)
         return ticket.booking.flight.options.all()
 
-
+    def calculate_price(self, ticket_id):
+        ticket = self.get(pk=ticket_id)
+        base_price = ticket.booking.flight.base_price
+        options_price_coefficient = (
+            ticket.booking.flight.options_price_coefficient
+        )
+        if ticket.seat_type == "B":
+            flight_price = base_price * BUSINESS_COEFFICIENT
+        else:
+            flight_price = base_price
+        options_price = sum(
+            option.price * options_price_coefficient
+            for option in ticket.options.all()
+        )
+        ticket.price = flight_price + options_price
+        ticket.save()

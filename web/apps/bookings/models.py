@@ -29,6 +29,9 @@ class Booking(models.Model):
         on_delete=models.SET_NULL,
     )
 
+    price = models.DecimalField(
+        max_digits=20, decimal_places=2, null=True, blank=True
+    )
     number = models.CharField(max_length=64, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -66,9 +69,15 @@ class Ticket(models.Model):
         CANCELLED = 'cancelled'
         REFUNDED = 'refunded'
 
-    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    booking = models.ForeignKey(
+        Booking, on_delete=models.CASCADE, related_name='tickets'
+    )
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     seat = models.ForeignKey("flights.Seat", on_delete=models.SET_NULL, null=True)
+
+    price = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True
+    )
     seat_type = models.CharField(max_length=32, choices=SeatType.choices)
     status = models.CharField(
         max_length=32, choices=Status.choices, default=Status.PENDING
@@ -93,11 +102,18 @@ class TicketOption(models.Model):
         "Ticket", on_delete=models.CASCADE, related_name="options"
     )
     quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(
+        max_digits=20, decimal_places=2, null=True, blank=True
+    )
 
     class Meta:
         constraints = [
             UniqueConstraint(fields=['option', 'ticket'], name='ticket_option')
         ]
+
+    def save(self, *args, **kwargs):
+        self.price = self.option.price * self.quantity
+        super().save(*args, **kwargs)
 
 
 class PaymentMethod(models.Model):

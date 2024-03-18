@@ -15,6 +15,9 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
     flight = serializers.HyperlinkedRelatedField(
         required=True, view_name="flight-detail", queryset=Flight.objects.all()
     )
+    tickets = serializers.HyperlinkedRelatedField(
+        many=True, view_name="ticket-detail", read_only=True
+    )
 
     class Meta:
         model = Booking
@@ -44,6 +47,7 @@ class TicketSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ticket
         fields = "__all__"
+        read_only_fields = ["price"]
 
 
 class OptionSerializer(serializers.HyperlinkedModelSerializer):
@@ -61,6 +65,7 @@ class TicketOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TicketOption
         fields = "__all__"
+        read_only_fields = ["price"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
