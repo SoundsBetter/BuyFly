@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-9)s1p3^_x0bcb13@6)+b94lpvmp8n65h@mgv^xi#_j_55k7e10
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['loose-lights-retire.loca.lt']
 
 # Application definition
 
@@ -71,7 +71,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -177,3 +177,8 @@ SIMPLE_JWT = {
     ),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+LIQPAY_PUBLIC_KEY = os.getenv("LIQPAY_PUBLIC_KEY", "")
+LIQPAY_PRIVATE_KEY = os.getenv("LIQPAY_PRIVATE_KEY", "")
+LIQPAY_CALLBACK_URL = os.getenv("LIQPAY_CALLBACK_URL", "")
+LIQPAY_SANDBOX_MODE = int(os.getenv("LIQPAY_SANDBOX_MODE", "1"))

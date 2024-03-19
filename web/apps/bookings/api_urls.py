@@ -7,7 +7,9 @@ from .apis import (
     PassengerViewSet,
     TicketViewSet,
     OptionViewSet,
-    TicketOptionViewSet, PaymentViewSet,
+    TicketOptionViewSet,
+    PaymentViewSet,
+    LiqPayCallbackAPIView,
 )
 
 router = DefaultRouter()
@@ -26,6 +28,8 @@ ticket_options_router.register(
 )
 
 urlpatterns = [
+    path("pay-callback/", LiqPayCallbackAPIView.as_view(), name="pay-callback"),
     path("", include(router.urls)),
-    path("", include(ticket_options_router.urls))
+    path("", include(ticket_options_router.urls)),
+
 ]

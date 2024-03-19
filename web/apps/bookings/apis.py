@@ -1,8 +1,14 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from liqpay import LiqPay
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from django.conf import settings
 
 from apps.accounts.permissions import (
     IsOwner,
@@ -19,6 +25,7 @@ from .serializers import (
     TicketOptionSerializer,
     PaymentSerializer,
 )
+from .services import create_payment_for_booking
 
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -56,7 +63,6 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["get"], url_path="calculate_price")
     def calculate_price(self, request, pk=None):
-        print(request.query_params)
         try:
             Booking.objects.calculate_price(booking_id=pk)
         except Booking.DoesNotExist:
@@ -148,3 +154,20 @@ class PaymentViewSet(viewsets.ModelViewSet):
         return Payment.objects.filter(passenger__user=self.request.user)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
+class LiqPayCallbackAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        liqpay = LiqPay(settings.LIQPAY_PUBLIC_KEY, settings.LIQPAY_PRIVATE_KEY)
+        data = request.data.get('data')
+        signature = request.data.get('signature')
+        sign = liqpay.str_to_sign(
+            settings.LIQPAY_PRIVATE_KEY + data + settings.LIQPAY_PRIVATE_KEY)
+
+        if sign == signature:
+            print('callback is valid')
+            response = liqpay.decode_data_from_str(data)
+            print('callback data', response)
+            return Response({'status': 'success', 'data': response})
+        else:
+            return Response({'status': 'error', 'message': 'Invalid signature'},
+                            status=400)
