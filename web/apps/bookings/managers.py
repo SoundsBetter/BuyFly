@@ -2,7 +2,8 @@ import secrets
 from datetime import datetime
 from django.db import models
 
-from .conf import BOOKING_NUMBER_TEMPLATE, BUSINESS_COEFFICIENT
+from .conf import BOOKING_NUMBER_TEMPLATE, BUSINESS_COEFFICIENT, \
+    TICKET_NUMBER_TEMPLATE
 
 
 class BookingManager(models.Manager):
@@ -43,3 +44,10 @@ class TicketManager(models.Manager):
         )
         ticket.price = flight_price + options_price
         ticket.save()
+
+    def create_ticket_number(self, booking):
+        token = secrets.token_hex(3)
+        number = TICKET_NUMBER_TEMPLATE.format(
+            token=token, booking_id=booking.id
+        )
+        return number

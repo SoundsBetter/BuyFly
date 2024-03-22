@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Ticket Details{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            Ticket #<span id="ticket-number">{{ ticket.number }}</span>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Passenger Name: <span
+                    id="passenger-name">{{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}</span>
+            </li>
+            <li class="list-group-item">Seat Number: <span
+                    id="seat-number">{% if ticket.seat %}
+                {{ ticket.seat.number }}{% else %}N/A{% endif %}</span></li>
+            <li class="list-group-item">Price: <span
+                    id="price">{{ ticket.price }}</span></li>
+            <li class="list-group-item">Seat Type: <span
+                    id="seat-type">{{ ticket.seat_type }}</span></li>
+            <li class="list-group-item">Status: <span
+                    id="status">{{ ticket.status }}</span></li>
+        </ul>
+    </div>
+</div>
+<script>
+    const ticketId = "{{ ticket.id }}";
+    const webSocketUrl = `ws://${window.location.host}/ws/ticket/${ticketId}/`;
+    const chatSocket = new WebSocket(webSocketUrl);
+
+    chatSocket.onopen = function (e) {
+        console.log('WebSocket connection established');
+    };
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        console.log('Data received from websocket:', data);
+
+        // Оновлення інформації в формі з отриманими даними
+        if (data.ticket_number) document.getElementById("ticket-number").value = data.ticket_number;
+        if (data.passenger_name) document.getElementById('passenger-name').value = data.passenger_name;
+        if (data.seat) document.getElementById('seat-number').value = data.seat;
+        if (data.price) document.getElementById('price').value = data.price;
+        if (data.seat_type) document.getElementById('seat-type').value = data.seat_type;
+        if (data.status) document.getElementById('status').value = data.status;
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('WebSocket connection closed unexpectedly');
+    };
+
+    chatSocket.onerror = function (e) {
+        console.error('WebSocket encountered an error:', e);
+    };
+</script>
+{% endblock %}

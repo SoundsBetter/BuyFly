@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-9)s1p3^_x0bcb13@6)+b94lpvmp8n65h@mgv^xi#_j_55k7e10
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['loose-lights-retire.loca.lt']
+ALLOWED_HOSTS = ['loose-lights-retire.loca.lt', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'drf_spectacular',
+    'daphne',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -182,3 +183,14 @@ LIQPAY_PUBLIC_KEY = os.getenv("LIQPAY_PUBLIC_KEY", "")
 LIQPAY_PRIVATE_KEY = os.getenv("LIQPAY_PRIVATE_KEY", "")
 LIQPAY_CALLBACK_URL = os.getenv("LIQPAY_CALLBACK_URL", "")
 LIQPAY_SANDBOX_MODE = int(os.getenv("LIQPAY_SANDBOX_MODE", "1"))
+
+ASGI_APPLICATION = "core.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        }
+    }
+}

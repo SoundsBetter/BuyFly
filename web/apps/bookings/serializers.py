@@ -35,8 +35,8 @@ class PassengerSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TicketSerializer(serializers.HyperlinkedModelSerializer):
-    seat = serializers.PrimaryKeyRelatedField(
-        queryset=Seat.objects.all(), required=False, allow_null=True
+    seat = serializers.HyperlinkedRelatedField(
+        queryset=Seat.objects.all(), required=False, allow_null=True, view_name="seat-detail"
     )
     options = serializers.PrimaryKeyRelatedField(
         read_only=True,
@@ -48,7 +48,7 @@ class TicketSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ticket
         fields = "__all__"
-        read_only_fields = ["price"]
+        read_only_fields = ["price", "number"]
 
 
 class OptionSerializer(serializers.HyperlinkedModelSerializer):

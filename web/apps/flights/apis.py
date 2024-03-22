@@ -1,8 +1,10 @@
 from rest_framework import viewsets, permissions
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.accounts.permissions import IsSupervisor
-from .models import Flight, Route
-from .serializers import FlightSerializer, RouteSerializer
+from .models import Flight, Route, Seat, Airplane
+from .serializers import FlightSerializer, RouteSerializer, SeatSerializer, \
+    AirplaneSerializer
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -28,3 +30,12 @@ class RouteViewSet(BaseViewSet):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
 
+
+class SeatViewSet(ReadOnlyModelViewSet):
+    queryset = Seat.objects.all()
+    serializer_class = SeatSerializer
+
+
+class AirplaneViewSet(ReadOnlyModelViewSet):
+    queryset = Airplane.objects.all()
+    serializer_class = AirplaneSerializer

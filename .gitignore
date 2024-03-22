@@ -4,3 +4,4 @@ init_db.sql
 .env
 .env.db
 __pycache__/
+data.json

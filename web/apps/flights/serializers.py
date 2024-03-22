@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Flight, Route, Airport
+from .models import Flight, Route, Airport, Seat, Airplane
 
 
 class FlightSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,4 +22,17 @@ class RouteSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Route
+        fields = "__all__"
+
+
+class SeatSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Seat
+        fields = "__all__"
+
+
+class AirplaneSerializer(serializers.HyperlinkedModelSerializer):
+    type = serializers.PrimaryKeyRelatedField(read_only=True)
+    class Meta:
+        model = Airplane
         fields = "__all__"

@@ -22,6 +22,8 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 
+from .views import home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('apps.accounts.api_urls')),
@@ -38,5 +40,6 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name='schema'),
         name='redoc',
     ),
-    path("", include('apps.bookings.urls'))
+    path("", include('apps.bookings.urls')),
+    path("home/", home, name="home")
 ]

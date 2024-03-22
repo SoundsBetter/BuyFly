@@ -109,6 +109,11 @@ class TicketViewSet(viewsets.ModelViewSet):
             return Ticket.objects.all()
         return Ticket.objects.filter(passenger__user=self.request.user)
 
+    def perform_create(self, serializer):
+        booking = serializer.validated_data["booking"]
+        number = Ticket.objects.create_ticket_number(booking=booking)
+        serializer.save(number=number)
+
     @action(detail=True, methods=["get"], url_path="calculate_price")
     def calculate_price(self, request, pk=None):
         try:
