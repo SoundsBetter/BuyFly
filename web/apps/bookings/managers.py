@@ -1,9 +1,14 @@
 import secrets
 from datetime import datetime
+from typing import Any
+
 from django.db import models
 
-from .conf import BOOKING_NUMBER_TEMPLATE, BUSINESS_COEFFICIENT, \
-    TICKET_NUMBER_TEMPLATE
+from .conf import (
+    BOOKING_NUMBER_TEMPLATE,
+    BUSINESS_COEFFICIENT,
+    TICKET_NUMBER_TEMPLATE,
+)
 
 
 class BookingManager(models.Manager):
@@ -15,7 +20,7 @@ class BookingManager(models.Manager):
         )
         return number
 
-    def calculate_price(self, booking_id):
+    def calculate_price(self, booking_id: int) -> None:
         booking = self.get(pk=booking_id)
         booking.price = sum(
             ticket.price for ticket in self.get(pk=booking_id).tickets.all()
@@ -24,11 +29,11 @@ class BookingManager(models.Manager):
 
 
 class TicketManager(models.Manager):
-    def get_available_options(self, ticket_pk):
+    def get_available_options(self, ticket_pk: int) -> list[Any]:
         ticket = self.get(pk=ticket_pk)
         return ticket.booking.flight.options.all()
 
-    def calculate_price(self, ticket_id):
+    def calculate_price(self, ticket_id: int) -> None:
         ticket = self.get(pk=ticket_id)
         base_price = ticket.booking.flight.base_price
         options_price_coefficient = (
@@ -45,7 +50,7 @@ class TicketManager(models.Manager):
         ticket.price = flight_price + options_price
         ticket.save()
 
-    def create_ticket_number(self, booking):
+    def create_ticket_number(self, booking: models.Model) -> str:
         token = secrets.token_hex(3)
         number = TICKET_NUMBER_TEMPLATE.format(
             token=token, booking_id=booking.id

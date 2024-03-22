@@ -1,7 +1,10 @@
 from rest_framework.permissions import BasePermission
 
-from .conf import GROUP_SUPERVISORS, GROUP_GATE_MANAGERS, \
-    GROUP_CHECK_IN_MANAGERS
+from .conf import (
+    GROUP_SUPERVISORS,
+    GROUP_GATE_MANAGERS,
+    GROUP_CHECK_IN_MANAGERS,
+)
 
 
 class IsSupervisor(BasePermission):
@@ -21,4 +24,7 @@ class IsCheckInManager(BasePermission):
 
 class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
+        if hasattr(obj, "user"):
+            return obj.user == request.user
+        if hasattr(obj, "passenger"):
+            return obj.passenger.user == request.user

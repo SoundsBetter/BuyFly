@@ -1,23 +1,36 @@
-import typing as t
 from django.contrib import messages
-from django.db.models import Model
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 
 from .conf import NOT_HAVE_ACCESS
 
-M = t.TypeVar("M", bound=Model)
 
+class DRFPermissionCheckMixin:
+    permission_classes = []
 
-class UserIsOwnerMixin:
-    object: M = None
-    model: M = None
+    def get_permission_object(self):
+        return None
+
+    def check_permissions(self, request):
+        for permission in [perm() for perm in self.permission_classes]:
+            if hasattr(
+                    permission, "has_permission"
+            ) and not permission.has_permission(request, self):
+                messages.error(request, NOT_HAVE_ACCESS)
+                return redirect(request.META.get("HTTP_REFERER", "home"))
+
+        obj = self.get_permission_object()
+        if obj is not None:
+            for permission in [
+                perm()
+                for perm in self.permission_classes
+                if hasattr(perm, "has_object_permission")
+            ]:
+                if not permission.has_object_permission(request, self, obj):
+                    messages.error(request, NOT_HAVE_ACCESS)
+                    return redirect(request.META.get("HTTP_REFERER", "home"))
 
     def dispatch(self, request, *args, **kwargs):
-        self.object = get_object_or_404(self.model, pk=kwargs["pk"])
-
-        owner = self.object.passenger.user
-
-        if request.user != owner:
-            messages.error(request, NOT_HAVE_ACCESS)
-            return redirect(request.META.get("HTTP_REFERER", "home"))
+        permission_check = self.check_permissions(request)
+        if permission_check:
+            return permission_check
         return super().dispatch(request, *args, **kwargs)  # type:ignore

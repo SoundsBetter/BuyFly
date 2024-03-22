@@ -25,7 +25,6 @@ from .serializers import (
     TicketOptionSerializer,
     PaymentSerializer,
 )
-from .services import create_payment_for_booking
 
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -70,7 +69,8 @@ class BookingViewSet(viewsets.ModelViewSet):
                 {"error": "Booking not found"}, status=status.HTTP_404_NOT_FOUND
             )
         return Response(
-            {"message": "Booking price is calculated"}, status=status.HTTP_200_OK
+            {"message": "Booking price is calculated"},
+            status=status.HTTP_200_OK,
         )
 
 
@@ -91,7 +91,7 @@ class TicketViewSet(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
 
     def get_permissions(self):
-        if self.action in ("list", "retrieve"):
+        if self.action in ("list", "retrieve"):  # type:ignore
             permission_classes = [
                 IsAuthenticated,
                 IsSupervisor | IsGateManager | IsCheckInManager | IsOwner,
@@ -127,7 +127,6 @@ class TicketViewSet(viewsets.ModelViewSet):
         )
 
 
-
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
@@ -159,20 +158,22 @@ class PaymentViewSet(viewsets.ModelViewSet):
         return Payment.objects.filter(passenger__user=self.request.user)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name="dispatch")
 class LiqPayCallbackAPIView(APIView):
     def post(self, request, *args, **kwargs):
         liqpay = LiqPay(settings.LIQPAY_PUBLIC_KEY, settings.LIQPAY_PRIVATE_KEY)
-        data = request.data.get('data')
-        signature = request.data.get('signature')
+        data = request.data.get("data")
+        signature = request.data.get("signature")
         sign = liqpay.str_to_sign(
-            settings.LIQPAY_PRIVATE_KEY + data + settings.LIQPAY_PRIVATE_KEY)
+            settings.LIQPAY_PRIVATE_KEY + data + settings.LIQPAY_PRIVATE_KEY
+        )
 
         if sign == signature:
-            print('callback is valid')
+            print("callback is valid")
             response = liqpay.decode_data_from_str(data)
-            print('callback data', response)
-            return Response({'status': 'success', 'data': response})
+            print("callback data", response)
+            return Response({"status": "success", "data": response})
         else:
-            return Response({'status': 'error', 'message': 'Invalid signature'},
-                            status=400)
+            return Response(
+                {"status": "error", "message": "Invalid signature"}, status=400
+            )
