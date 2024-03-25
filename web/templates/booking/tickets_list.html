@@ -2,6 +2,44 @@
 {% block title %}tickets by flight{% endblock %}
 {% block content %}
     {% for ticket in tickets %}
-        {% include "booking/ticket.html" %}
+        {% include "booking/includes/ticket.html" %}
     {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ticketIds = Array.from(document.querySelectorAll('.ticket')).map(ticket => ticket.dataset.ticketId);
+            const webSocketUrl = `ws://${window.location.host}/ws/tickets/`;
+            const chatSocket = new WebSocket(webSocketUrl);
+
+            chatSocket.onopen = function (e) {
+                console.log('WebSocket connection established');
+                chatSocket.send(JSON.stringify({
+                    command: 'subscribe',
+                    ticket_ids: ticketIds
+                }));
+            };
+
+            chatSocket.onmessage = function (e) {
+                const data = JSON.parse(e.data);
+                if (data.ticket_id) {
+                    const ticketElement = document.querySelector(`.ticket[data-ticket-id="${data.ticket_id}"]`);
+                    if (ticketElement) {
+                        ticketElement.querySelector('.ticket-number').textContent = '#' + data.ticket_number;
+                        ticketElement.querySelector('.passenger-name').textContent = data.passenger_name;
+                        ticketElement.querySelector('.seat-number').textContent = data.seat || 'N/A';
+                        ticketElement.querySelector('.price').textContent = data.price;
+                        ticketElement.querySelector('.seat-type').textContent = data.seat_type;
+                        ticketElement.querySelector('.status').textContent = data.status;
+                    }
+                }
+            };
+
+            chatSocket.onclose = function (e) {
+                console.error('WebSocket connection closed unexpectedly');
+            };
+
+            chatSocket.onerror = function (e) {
+                console.error('WebSocket encountered an error:', e);
+            };
+        });
+    </script>
 {% endblock %}

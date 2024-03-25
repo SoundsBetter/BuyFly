@@ -91,6 +91,7 @@ class Ticket(models.Model):
     def _notify_status_change(self) -> None:
         channel_layer = get_channel_layer()
         ticket_data = {
+            "ticket_id": self.pk,
             "ticket_number": self.number,
             "passenger_name": f"{self.passenger.first_name} {self.passenger.last_name}",
             "seat": self.seat.number if self.seat else None,

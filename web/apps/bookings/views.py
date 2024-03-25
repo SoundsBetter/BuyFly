@@ -33,7 +33,7 @@ class PayView(TemplateView):
 
 class TicketDetailView(DRFPermissionCheckMixin, DetailView):
     model = Ticket
-    template_name = "booking/ticket.html"
+    template_name = "booking/ticket_detail.html"
     permission_classes = [
         IsAuthenticated,
         IsOwner | IsSupervisor | IsGateManager | IsCheckInManager,

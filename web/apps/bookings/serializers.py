@@ -23,7 +23,7 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Booking
         fields = "__all__"
-        read_only_fields = ["number"]
+        read_only_fields = ["number", "price"]
 
 
 class PassengerSerializer(serializers.HyperlinkedModelSerializer):
