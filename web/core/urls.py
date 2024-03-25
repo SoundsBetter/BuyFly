@@ -21,7 +21,7 @@ urlpatterns = [
     path(f"{API_DOMAIN}/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         f"{API_DOMAIN}/schema/swagger-ui/",
-         SpectacularSwaggerView.as_view(url_name="schema"),
+        SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     path(
@@ -30,5 +30,5 @@ urlpatterns = [
         name="redoc",
     ),
     path("", include("apps.bookings.urls")),
-    path("home/", home, name="home")
+    path("home/", home, name="home"),
 ]

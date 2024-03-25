@@ -68,7 +68,8 @@ class TicketListView(ListView):
                     booking__flight__id=flight_id, passenger__user=user
                 )
         if user_id:
-            if user.groups.filter(name__in=[
+            if user.groups.filter(
+                name__in=[
                     GROUP_SUPERVISORS,
                     GROUP_GATE_MANAGERS,
                     GROUP_CHECK_IN_MANAGERS,
@@ -84,13 +85,14 @@ class TicketListView(ListView):
         user = self.request.user
 
         if user_id:
-            if not user.groups.filter(name__in=[
-                GROUP_SUPERVISORS,
-                GROUP_GATE_MANAGERS,
-                GROUP_CHECK_IN_MANAGERS,
-            ]).exists() and user_id != str(user.id):
+            if not user.groups.filter(
+                name__in=[
+                    GROUP_SUPERVISORS,
+                    GROUP_GATE_MANAGERS,
+                    GROUP_CHECK_IN_MANAGERS,
+                ]
+            ).exists() and user_id != str(user.id):
                 messages.error(self.request, NOT_HAVE_ACCESS)
                 return redirect("home")
 
         return super().dispatch(*args, **kwargs)
-

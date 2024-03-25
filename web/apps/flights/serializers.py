@@ -33,6 +33,7 @@ class SeatSerializer(serializers.HyperlinkedModelSerializer):
 
 class AirplaneSerializer(serializers.HyperlinkedModelSerializer):
     type = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Airplane
         fields = "__all__"

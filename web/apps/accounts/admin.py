@@ -13,8 +13,8 @@ class SupervisorAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk and self.instance.user:
-            self.fields['username'].initial = self.instance.user.username
-            self.fields['email'].initial = self.instance.user.email
+            self.fields["username"].initial = self.instance.user.username
+            self.fields["email"].initial = self.instance.user.email
 
     class Meta:
         model = Supervisor
@@ -25,21 +25,21 @@ class SupervisorAdminForm(forms.ModelForm):
 
         if self.instance.pk is None:
             user_data = {
-                'username': self.cleaned_data['username'],
-                'email': self.cleaned_data['email'],
-                'password': self.cleaned_data['password'],
+                "username": self.cleaned_data["username"],
+                "email": self.cleaned_data["email"],
+                "password": self.cleaned_data["password"],
             }
             user = User.objects.create_user(**user_data)
             supervisor.user = user
         else:
             user = supervisor.user
-            user.username = self.cleaned_data['username']
-            user.email = self.cleaned_data['email']
-            if self.cleaned_data['password']:
-                user.set_password(self.cleaned_data['password'])
+            user.username = self.cleaned_data["username"]
+            user.email = self.cleaned_data["email"]
+            if self.cleaned_data["password"]:
+                user.set_password(self.cleaned_data["password"])
             user.save()
 
-        supervisor_group, _ = Group.objects.get_or_create(name='supervisors')
+        supervisor_group, _ = Group.objects.get_or_create(name="supervisors")
         user.groups.add(supervisor_group)
 
         if commit:
@@ -49,13 +49,14 @@ class SupervisorAdminForm(forms.ModelForm):
 
 class SupervisorAdmin(admin.ModelAdmin):
     form = SupervisorAdminForm
-    readonly_fields = ['user']
-    list_display = ['user', "get_email"]
+    readonly_fields = ["user"]
+    list_display = ["user", "get_email"]
 
     def get_email(self, obj):
         return obj.user.email
 
     get_email.short_description = "email"  # type: ignore
+
 
 admin.site.register(Supervisor, SupervisorAdmin)
 admin.site.register(User)

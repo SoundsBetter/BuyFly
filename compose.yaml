@@ -1,27 +1,34 @@
-services:
-  db:
-    image: postgres
-    volumes:
-      - postgres_data:/var/lib/postgres_data
-    env_file:
-      - ./.env.db
+version: "3.8"
 
+services:
   web:
-    build: ./web
+    build:
+      context: .
+      dockerfile: web/Dockerfile.prod
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./web/:/usr/src/web/
-    ports:
-      - 8000:8000
+      - static_volume:/home/app/web/static
+    expose:
+      - "8000:8000"
     env_file:
       - ./.env
     depends_on:
       - db
-
-  redis:
-    image: redis:alpine
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.db
+  nginx:
+    build: ./nginx
     ports:
-      - 6379:6379
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/home/app/web/static
 
 volumes:
   postgres_data:
+  static_volume:
