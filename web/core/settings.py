@@ -28,7 +28,9 @@ SECRET_KEY = 'django-insecure-9)s1p3^_x0bcb13@6)+b94lpvmp8n65h@mgv^xi#_j_55k7e10
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['loose-lights-retire.loca.lt', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'loose-lights-retire.loca.lt', 'localhost', '127.0.0.1', '34.165.47.130'
+]
 
 # Application definition
 
