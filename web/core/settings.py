@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'drf_spectacular',
     'daphne',
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -201,3 +203,5 @@ CHANNEL_LAYERS = {
 
 API_VERSION = "v1"
 API_DOMAIN = f"api/{API_VERSION}"
+
+CORS_ALLOW_ALL_ORIGINS = True
