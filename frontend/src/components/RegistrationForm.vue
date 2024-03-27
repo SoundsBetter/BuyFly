@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AlertMessage :message="message" :type="messageType"/>
     <form @submit.prevent="register"
           class="needs-validation p-4 border rounded shadow">
       <h2 class="mb-4">Registration</h2>
@@ -24,18 +25,18 @@
                v-model="password2" placeholder="Confirm your password">
       </div>
       <button type="submit" class="btn btn-primary">Register</button>
-      <div v-if="message" class="alert mt-3"
-           :class="messageType === 'error' ? 'alert-danger' : 'alert-success'">
-        {{ message }}
-      </div>
     </form>
   </div>
 </template>
 
 <script>
+import AlertMessage from '@/components/AlertMessage.vue';
 import axios from 'axios';
 
 export default {
+  components: {
+    AlertMessage
+  },
   data() {
     return {
       username: "",
@@ -56,23 +57,19 @@ export default {
       };
 
       try {
-        await axios.post('http://localhost:8000/api/v1/accounts/registration/', data);
+        await axios.post('accounts/registration/', data);
         this.message = 'Registration successful!';
         this.messageType = 'success';
-        // Clear the form or redirect the user
       } catch (error) {
-        console.error(error.response.data)
-        console.error('!!!!!!!!!!!!!!')
         if (error.response && error.response.data) {
-          // Створення рядка з повідомлень про помилки для відображення
           this.message = Object.keys(error.response.data).map(key => {
             const errors = error.response.data[key];
-            return `${key}: ${errors.join(', ')}`; // Об'єднуємо масив помилок в один рядок
+            return `${key}: ${errors.join(', ')}`;
           }).join('; ');
-          this.messageType = 'error';
+          this.messageType = 'danger';
         } else {
-          this.message = 'Сталася помилка під час реєстрації.';
-          this.messageType = 'error';
+          this.message = 'Something went wrong';
+          this.messageType = 'danger';
         }
       }
     }
