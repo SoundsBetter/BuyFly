@@ -3,7 +3,14 @@ from rest_framework import serializers
 from .models import Flight, Route, Airport, Seat, Airplane
 
 
+class AirportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airport
+        fields = '__all__'
+
+
 class RouteSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
     departure_airport = serializers.SlugRelatedField(
         slug_field="icao",
         queryset=Airport.objects.all(),

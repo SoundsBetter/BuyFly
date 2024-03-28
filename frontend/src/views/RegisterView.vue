@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5 col-lg-5 col-md-6 col-xl-4">
     <RegistrationForm />
   </div>
 </template>

@@ -1,17 +1,18 @@
 <script>
-import LoginForm from "@/components/LoginForm.vue";
+
+import FlightCreateForm from "@/components/FlightCreateForm.vue";
 
 export default {
-  name: "LoginView",
+  name: "FlightCreateView",
   components: {
-    LoginForm
+    FlightCreateForm
   }
 }
 </script>
 
 <template>
   <div class="container mt-5 col-lg-5 col-md-6 col-xl-4">
-    <LoginForm/>
+    <FlightCreateForm/>
   </div>
 </template>
 

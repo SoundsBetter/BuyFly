@@ -1,12 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import RegisterView from "@/views/RegisterView.vue";
 import LoginView from "@/views/LoginView.vue";
 import TicketList from "@/components/TicketList.vue";
 import FlightList from "@/components/FlightList.vue";
+import FlightCreateView from "@/views/FlightCreateView.vue";
 
 const routes = [{
-    path: '/', name: 'home', component: HomeView
+    path: '/', name: 'home', component: LoginView
 }, {
     path: '/about', name: 'about', // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -20,6 +20,8 @@ const routes = [{
     path: "/tickets", name: 'tickets', component: TicketList
 }, {
     path: "/flights", name: 'flights', component: FlightList
+}, {
+    path: "/flights/create", name: 'create_flight', component: FlightCreateView
 }
 ]
 
