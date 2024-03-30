@@ -1,32 +1,48 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import RegisterView from "@/views/RegisterView.vue";
-import LoginView from "@/views/LoginView.vue";
 import TicketList from "@/components/TicketList.vue";
-import FlightList from "@/components/FlightList.vue";
-import FlightCreateView from "@/views/FlightCreateView.vue";
+import store from "@/store";
 
 const routes = [{
-    path: '/', name: 'home', component: LoginView
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/LoginView.vue'),
 }, {
-    path: '/about', name: 'about', // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: "/register",
+    name: 'register',
+    component: () => import('@/views/RegisterView.vue')
 }, {
-    path: "/register", name: 'register', component: RegisterView
+    path: "/login",
+    name: 'login',
+    component: () => import('@/views/LoginView.vue')
 }, {
-    path: "/login", name: 'login', component: LoginView
+    path: "/tickets",
+    name: 'tickets',
+    component: TicketList
 }, {
-    path: "/tickets", name: 'tickets', component: TicketList
+    path: "/flights",
+    name: 'flights',
+    component: () => import('@/views/FlightListView.vue'),
 }, {
-    path: "/flights", name: 'flights', component: FlightList
-}, {
-    path: "/flights/create", name: 'create_flight', component: FlightCreateView
-}
-]
+    path: "/flights/create",
+    name: 'create_flight',
+    component: () => import('@/views/FlightCreateView.vue'),
+    meta: {'role': 'supervisors'},
+}]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL), routes
 })
+
+router.beforeEach((to, from, next) => {
+    const user = store.state.auth.user;
+    const role = user?.groups[0];
+    const requiresRole = to.meta.role;
+
+    if (requiresRole && role !== requiresRole) {
+        next('/');
+    } else {
+        next();
+    }
+});
 
 export default router

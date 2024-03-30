@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue';
-import axios from 'axios';
 import AlertMessage from "@/components/AlertMessage.vue";
+import AuthService from "@/services/AuthService";
 
 const username = ref("");
 const email = ref('');
@@ -22,15 +22,15 @@ const clearErrors = () => {
 };
 
 const register = async () => {
-  clearErrors(); // Очистити помилки перед відправкою форми
+  clearErrors();
   try {
-    await axios.post('accounts/registration/', {
+    const response = await AuthService.register( {
       username: username.value,
       email: email.value,
       password1: password1.value,
       password2: password2.value,
     });
-    console.log('Registration successful:');
+    console.log('Registration successful:', response);
     message.value = "Registration successful"
     messageType.value = "success"
   } catch (error) {

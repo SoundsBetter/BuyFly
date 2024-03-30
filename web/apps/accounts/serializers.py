@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 from .models import User, GateManager, CheckInManager
@@ -46,3 +47,9 @@ class GateManagerSerializer(BaseManagerSerializer):
         user = super().create(validated_data)
         gate_manager = GateManager.objects.create(user=user)
         return gate_manager
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ['id', 'name']

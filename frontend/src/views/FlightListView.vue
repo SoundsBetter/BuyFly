@@ -1,12 +1,11 @@
 <template>
   <div>
     <h2>Flight List</h2>
-    <ul>
-    <FlightData v-for="flight in flights"
+
+    <div><FlightData v-for="flight in flights"
       :key="flight.id"
       :flight="flight"
-    />
-    </ul>
+    /></div>
   </div>
 </template>
 

@@ -1,10 +1,9 @@
 <script setup>
 import AlertMessage from '@/components/AlertMessage.vue';
 import {ref} from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
+import AuthService from "@/services/AuthService";
 
-const email = ref('');
 const password = ref('');
 const username = ref('');
 const message = ref('')
@@ -14,15 +13,15 @@ const router = useRouter()
 
 const login = async () => {
   try {
-    const response = await axios.post('accounts/login/', {
-      email: email.value,
+    const response = await AuthService.login( {
       password: password.value,
       username: username.value,
     });
     console.log('Login successful:', response);
     message.value = "Login successful"
     messageType.value = "success"
-    router.push("/")
+    await router.push("/")
+
   } catch (error) {
     if (error.response && error.response.data) {
       message.value = Object.keys(error.response.data).map(key => {
@@ -45,12 +44,6 @@ const login = async () => {
       <input type="username" class="form-control" id="username"
              v-model="username" required
              placeholder="username">
-    </div>
-    <div class="form-group mb-3">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" v-model="email"
-             required
-             placeholder="email">
     </div>
     <div class="form-group mb-3">
       <label for="password">Password</label>
