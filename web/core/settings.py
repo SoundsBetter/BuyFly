@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'daphne',
     'corsheaders',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.auth',

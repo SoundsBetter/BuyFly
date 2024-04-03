@@ -1,9 +1,9 @@
-import axios from 'axios';
 import store from "@/store";
+import API from "@/api/api";
 
 class AuthService {
   login(user) {
-    return axios
+    return API
       .post('accounts/login/', user)
       .then(response => {
         if (response.data.access) {
@@ -14,7 +14,7 @@ class AuthService {
   }
 
   register(user) {
-    return axios
+    return API
       .post('accounts/registration/', user)
       .then(response => {
         if (response.data.access) {

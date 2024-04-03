@@ -21,7 +21,7 @@ const routes = [{
 }, {
     path: "/flights",
     name: 'flights',
-    component: () => import('@/views/FlightListView.vue'),
+    component: () => import('@/views/SearchFlightView.vue'),
 }, {
     path: "/flights/create",
     name: 'create_flight',
@@ -35,10 +35,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const user = store.state.auth.user;
-    const role = user?.groups[0];
+    const groups = user?.groups;
     const requiresRole = to.meta.role;
 
-    if (requiresRole && role !== requiresRole) {
+    if (requiresRole && !groups.includes(requiresRole)) {
         next('/');
     } else {
         next();

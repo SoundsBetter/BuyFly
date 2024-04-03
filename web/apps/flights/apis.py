@@ -1,4 +1,6 @@
-from rest_framework import viewsets, permissions, status
+import django_filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, permissions, status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
@@ -23,9 +25,27 @@ class BaseViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
+class FlightFilter(django_filters.FilterSet):
+    departure_airport = django_filters.CharFilter(
+        field_name='route__departure_airport__icao', lookup_expr='icontains'
+    )
+    arrival_airport = django_filters.CharFilter(
+        field_name='route__arrival_airport__icao', lookup_expr='icontains'
+    )
+    departure_date = django_filters.CharFilter(
+        field_name='departure_datetime', lookup_expr='date'
+    )
+
+    class Meta:
+        model = Flight
+        fields = ['departure_airport', 'arrival_airport', 'departure_date',]
+
+
 class FlightViewSet(BaseViewSet):
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = FlightFilter
 
     def perform_create(self, serializer):
         route = serializer.validated_data["route"]
@@ -67,5 +87,6 @@ class RouteSearchAPIView(APIView):
             departure_airport_id=departure_airport_id,
             arrival_airport_id=arrival_airport_id,
         )
-        serializer = RouteSerializer(routes, many=True, context={"request": request})
+        serializer = RouteSerializer(routes, many=True,
+                                     context={"request": request})
         return Response(serializer.data)

@@ -1,5 +1,6 @@
 const state = {
   user: JSON.parse(localStorage.getItem('user')) || null,
+  isRefreshing: false
 };
 
 const mutations = {
@@ -20,6 +21,9 @@ const actions = {
   logout({ commit }) {
     commit('CLEAR_USER_DATA');
   },
+  startTokenRefresh() {
+    commit()
+  }
 };
 
 export default {
