@@ -15,6 +15,7 @@ const flights = ref([]);
 
 const handleSearch = async (searchQuery) => {
   try {
+    console.log(searchQuery)
     const response = await API.get('flights/', { params: searchQuery });
     console.log(response.data)
     flights.value = response.data;

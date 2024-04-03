@@ -1,12 +1,13 @@
 <script setup>
-import {ref, defineEmits, onMounted, watch} from 'vue';
+import {defineEmits, onMounted, ref, watch} from 'vue';
 import {fetchAirports} from "@/services/airportService";
+
 const airports = ref([]);
 const emit = defineEmits(['search'])
+const date = ref(new Date())
 const searchQuery = ref({
-  departure_airport: 'AYGA',
-  arrival_airport: 'AYMD',
-  departure_date: '',
+  departure_airport: '',
+  arrival_airport: '',
 });
 
 const searchDeparture = ref('');
@@ -48,6 +49,8 @@ const selectAirport = (airport, type) => {
 watch(searchDeparture, (newVal) => updateFilteredAirports(newVal, filteredDepartureAirports));
 watch(searchArrival, (newVal) => updateFilteredAirports(newVal, filteredArrivalAirports));
 const submitSearch = () => {
+  console.log(date, '!!!!!!!!!!!!!!!!!!!!!!')
+  searchQuery.value.departure_date = date.value.toISOString().split('T')[0];
   emit('search', searchQuery.value);
 };
 
@@ -60,7 +63,7 @@ const submitSearch = () => {
 
         <div class="col-md position-relative">
           <input class="form-control" type="text" v-model="searchDeparture"
-                 placeholder="From">
+                 placeholder="From" required>
           <ul class="list-group position-absolute w-100"
               v-show="filteredDepartureAirports.length > 0">
             <li class="list-group-item"
@@ -73,7 +76,7 @@ const submitSearch = () => {
 
         <div class="col-md position-relative">
           <input class="form-control" type="text" v-model="searchArrival"
-                 placeholder="To">
+                 placeholder="To" required>
           <ul class="list-group position-absolute w-100"
               v-show="filteredArrivalAirports.length > 0">
             <li class="list-group-item"
@@ -84,15 +87,8 @@ const submitSearch = () => {
           </ul>
         </div>
 
-        <!--          <div class="col-md">-->
-        <!--            <label for="departure_date" class="form-label">Date</label>-->
-        <!--            <input id="departure_date" class="form-control"-->
-        <!--                   v-model="searchQuery.departure_date" type="date"-->
-        <!--                   placeholder="Date" required>-->
-        <!--          </div>-->
-
         <div class="col-md">
-          <VDatePicker v-model="searchQuery.departure_date" mode="date"/>
+          <VDatePicker v-model="date" mode="date"/>
         </div>
 
         <div class="col-md-auto">

@@ -12,6 +12,7 @@ API.interceptors.response.use(
   response => response,
   async (error) => {
     const originalRequest = error.config;
+    console.log(error)
     if (error.response.status === 401 && !store.state.auth.isRefreshing) {
       console.log(store.state.auth.isRefreshing)
       store.dispatch('auth/startTokenRefresh');
