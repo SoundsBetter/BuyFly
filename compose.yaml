@@ -29,6 +29,11 @@ services:
     volumes:
       - static_volume:/home/app/web/static
 
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
 volumes:
   postgres_data:
   static_volume:
