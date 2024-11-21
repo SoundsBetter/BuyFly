@@ -1,0 +1,132 @@
+[
+  {
+    "model": "flights.airplanetype",
+    "pk": 1,
+    "fields": {
+      "model": "Airbus A320",
+      "params": {
+        "length": "37.6 m",
+        "wingspan": "35.8 m",
+        "max_speed": "828 km/h",
+        "range": "6,500 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 2,
+    "fields": {
+      "model": "Airbus A330",
+      "params": {
+        "length": "63.7 m",
+        "wingspan": "60.3 m",
+        "max_speed": "871 km/h",
+        "range": "13,430 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 3,
+    "fields": {
+      "model": "Airbus A350",
+      "params": {
+        "length": "66.8 m",
+        "wingspan": "64.8 m",
+        "max_speed": "911 km/h",
+        "range": "15,000 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 4,
+    "fields": {
+      "model": "Airbus A380",
+      "params": {
+        "length": "72.7 m",
+        "wingspan": "79.8 m",
+        "max_speed": "1,020 km/h",
+        "range": "15,200 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 5,
+    "fields": {
+      "model": "Airbus A220",
+      "params": {
+        "length": "35.0 m",
+        "wingspan": "35.1 m",
+        "max_speed": "871 km/h",
+        "range": "6,204 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 6,
+    "fields": {
+      "model": "Boeing 737",
+      "params": {
+        "length": "39.5 m",
+        "wingspan": "35.8 m",
+        "max_speed": "842 km/h",
+        "range": "6,510 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 7,
+    "fields": {
+      "model": "Boeing 747",
+      "params": {
+        "length": "70.7 m",
+        "wingspan": "68.4 m",
+        "max_speed": "920 km/h",
+        "range": "13,450 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 8,
+    "fields": {
+      "model": "Boeing 767",
+      "params": {
+        "length": "54.9 m",
+        "wingspan": "47.6 m",
+        "max_speed": "851 km/h",
+        "range": "11,065 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 9,
+    "fields": {
+      "model": "Boeing 777",
+      "params": {
+        "length": "73.9 m",
+        "wingspan": "64.8 m",
+        "max_speed": "896 km/h",
+        "range": "17,370 km"
+      }
+    }
+  },
+  {
+    "model": "flights.airplanetype",
+    "pk": 10,
+    "fields": {
+      "model": "Boeing 787",
+      "params": {
+        "length": "56.7 m",
+        "wingspan": "60.1 m",
+        "max_speed": "913 km/h",
+        "range": "14,140 km"
+      }
+    }
+  }
+]
